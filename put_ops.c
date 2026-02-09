@@ -1,0 +1,51 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   put_ops.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rajarada <rajarada@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/02 13:42:56 by rajarada          #+#    #+#             */
+/*   Updated: 2026/02/04 12:13:47 by rajarada         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "push_swap.h"
+
+int	ft_strlen(char *op)
+{
+	int	i;
+
+	i = 0;
+	while (op[i])
+		i++;
+	return (i);
+}
+
+void	putop(const char *op)
+{
+	write(1, op, ft_strlen(op));
+	write(1, "\n", 1);
+}
+
+void	count_op(t_bench *bn, t_op op)
+{
+	if (!bn || !bn->enabled)
+		return ;
+	bn->count[op]++;
+	bn->total_ops++;
+}
+
+void	do_sa(t_node **a, t_bench *bn)
+{
+	sa(a);
+	putop("sa");
+	count_op(bn, OP_SA);
+}
+
+void	do_sb(t_node **b, t_bench *bn)
+{
+	sb(b);
+	putop("sb");
+	count_op(bn, OP_SB);
+}
