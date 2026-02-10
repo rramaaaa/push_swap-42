@@ -86,20 +86,52 @@ int	parse_int_strict(const char *s, int *out)
 int	parse_args(int argc, char **argv, t_parse *p)
 {
 	int	i;
+	int	v;
 
-	i = 0;
+	i = 1;
 	if (!p)
 		return (0);
 	p->num = 0;
 	p->vals = NULL;
 	p->bench = 0;
 	p->forced = "--adaptive";
-	while (i < argc)
+	while (i < argc - 1)
 	{
-		if (is_flag(argv[i]))
-			i++;
-		p->num++;
+		if (!is_flag(argv[i]))
+			p->num++;
 		i++;
 	}
 	if (p->num == 0)
 		return (1);
+	p->vlas = malloc(sizeof(int) * p->num);
+	if (!p->vals)
+		return (0);
+	i = 1;
+	while (i < argc - 1)
+	{
+		if (!set_flag(argv[i], &p->forced, &p->bench))
+		{
+			free(p->vals);
+			p->num = 0;
+			p->vals = NULL;
+			return (0);
+		}
+		if (!parse_int_strict(argv[i], &v))
+		{
+			free(p->vals);
+			p->vals = NULL;
+			p->num = 0;
+			return (0);
+		}
+		if (parse_int_strict(argv[i], &v))
+			p->vals[p->num++] = v;
+		if (has_dup(p->vals, p->num))
+		{
+			free(p->vals);
+			p->vals = NULL;
+			p->num = 0;
+			return (0);
+		}
+		return (1);
+	}
+}
