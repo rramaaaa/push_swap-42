@@ -30,6 +30,7 @@ int	pos_of_rank(t_node *a, int rank)
 	t_node *temp;
 
 	temp = a;
+	pos = 0;
 	while (temp)
 	{
 		if (temp->rank == rank)
@@ -42,5 +43,27 @@ int	pos_of_rank(t_node *a, int rank)
 
 void	rotate_to_pos_a(t_node **a, int pos, t_bench *bn)
 {
+	int	size;
+
+	size = list_size(*a);
+	if(size <= 1 || pos <= 0)
+		return ;
+	if (pos <= size / 2)
+		while (pos--)
+			do_ra(a, bn);
+	else
+	{
+		pos = size - pos;
+		while (pos--)		
+			do_rra(a,bn);
+	}
 	
+}
+
+void	rotate_min_to_top(t_node **a, t_bench *bn)
+{
+	int pos;	
+    
+    pos = pos_of_min_rank(*a);
+	rotate_to_pos_a(a, pos, bn);
 }

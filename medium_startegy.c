@@ -18,6 +18,8 @@ static int	int_sqrt(int n)
 	int	x;
 	
 	x = 1;
+	if (n <= 0)
+		return (0);
 	while ((x + 1) * (x + 1) <= n)
 		x++;
 	return (x);
@@ -27,7 +29,7 @@ static int	in_range(int r, int lo, int hi)
 {
 	if (lo <= r && r < hi)
 		return (1);
-	retrun (0);
+	return (0);
 }
 
 static int	find_pos_in_range(t_node *a, int lo, int hi)
@@ -49,21 +51,21 @@ static void	pull_back_max(t_node **a, t_node **b, t_bench *bn)
 {
 	while (*b)
 	{
-		int	bs;
+		int	size;
 		int	target;
 		int	pos;
 		
+		size = list_size(*b);
+		target = size - 1;
 		pos = pos_of_rank(*b, target);
-		bs = list_size(*b);
-		target = bs - 1;
-		if (pos <= bs / 2)
+		if (pos <= size / 2)
 		{
 			while (pos--)
 				do_rb(b, bn);
 		}
 		else
 		{
-			pos = bs - pos;
+			pos = size - pos;
 			while (pos--)
 				do_rrb(b, bn);
 		}
@@ -71,18 +73,18 @@ static void	pull_back_max(t_node **a, t_node **b, t_bench *bn)
 	}
 }
 
-
 void	strategy_medium(t_node **a, t_node **b, t_bench *bn)
 {
-	int	n;
-	int	k;
+	int	size;
+	int	sqrt;
 	int	bucket_size;
 	int	bi;
 	
-	n = list_size(*a);
-	k = int_sqrt(n);
-	bucket_size = (n + k - 1) / k;
-	for (bi = 0; bi < k; bi++)
+	size = list_size(*a);
+	sqrt = int_sqrt(size);
+	bi = 0;
+	bucket_size = (size + sqrt - 1) / sqrt;
+	while (bi < sqrt)
 	{
 		int	lo;
 		int	hi;
@@ -103,6 +105,7 @@ void	strategy_medium(t_node **a, t_node **b, t_bench *bn)
 				do_rb(b, bn);
 			pushed++;
 		}
+		bi++;
 	}
 	pull_back_max(a, b, bn);
 	rotate_min_to_top(a, bn);

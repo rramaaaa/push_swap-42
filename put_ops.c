@@ -12,9 +12,9 @@
 
 #include "push_swap.h"
 
-int	ft_strlen(char *op)
+size_t	ft_strlen(char *op)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (op[i])
