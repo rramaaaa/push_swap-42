@@ -15,7 +15,7 @@ double	compute_disorder(t_node *a)
     j = a;
     while (i)
     {
-        if (i-> value < j->value)
+        if (i->value < j->value)
                 mistakes++;
         total++;
         i = i->next;

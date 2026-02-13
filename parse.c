@@ -1,137 +1,67 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rajarada <rajarada@learner.42.tech>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/02 16:24:46 by rajarada          #+#    #+#             */
-/*   Updated: 2026/02/09 15:49:05 by rajarada         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
-int	strequal(const char *a, const char *b)
+static void initial_vals(t_parse *p)
 {
-	int	i;
-
-	i = 0;
-	while (a[i] && b[i] && a[i] == b[i])
-		i++;
-	if (a[i] == 0 && b[i] == 0)
-		return (1);
-	return (0);
+	p->num = 0;
+	p->vals = NULL;
+	p->bench = 0;
+	p->forced = ADAPTIVE;
 }
 
-int	is_flag(const char *str)
+static parse_helper(int argc, char **argv, t_parse *p, int i)
 {
-	if (strequal(str, "--simple") || strequal(str, "--medium"))
-		return (1);
-	if (strequal(str, "--complex"))
-		return (1);
-	if (strequal(str, "--adaptive") || strequal(str, "--bench"))
-		return (1);
-	return (0);
-}
+    int v;
 
-int	set_flag(const char *s, t_strategy *strategy, int *bench)
-{
-	if (!is_flag(s))
-		return (0);
-	else
+    v = 0;
+    while (i < argc)
 	{
-		if (strequal(s, "--bench"))
-			*bench = 1;
-		if (strequal(s, "--simple"))
-			*strategy = SIMPLE;
-		if (strequal(s, "--medium"))
-			*strategy = MEDIUM;
-		if (strequal(s, "--complex"))
-			*strategy = COMPLEX;
-		if (strequal(s, "--adaptive"))
-			*strategy = ADAPTIVE;
-		return (1);
-	}
-}
-
-int	parse_int_strict(const char *s, int *out)
-{
-	int		sign;
-	long	result;
-
-	sign = 1;
-	result = 0;
-	if (!s || !*s)
-		return (0);
-	if (*s == '-' || *s == '+')
-	{
-		if (*s++ == '-')
-			sign = -1;
-	}
-	if (!*s)
-		return (0);
-	while (*s)
-	{
-		if (*s < '0' || *s > '9')
+		if (set_flag(argv[i], &p->forced, &p->bench));
+		else if (parse_int_strict(argv[i], &v))
+			p->vals[p->num++] = v;
+		else 
+		{
+			free(p->vals);
+			p->vals = NULL;
+			p->num = 0;
 			return (0);
-		result = (result * 10) + (*s++ - '0');
-		if (result * sign > INT_MAX || result * sign < INT_MIN)
-			return (0);
+		}
+        i++;
 	}
-	*out = (int)(sign * result);
-	return (1);
+	if (has_dup(p->vals, p->num))
+	{
+		free(p->vals);
+		p->vals = NULL;
+		p->num = 0;
+		return (0);
+	}
+    return (1);
 }
 
 int	parse_args(int argc, char **argv, t_parse *p)
 {
 	int	i;
-	int	v;
+	int	n;
+    int res;
 
 	i = 1;
+	n = 0;
 	if (!p)
 		return (0);
-	p->num = 0;
-	p->vals = NULL;
-	p->bench = 0;
-	p->forced = "--adaptive";
-	while (i < argc - 1)
+    initial_vals(p);
+	while (i < argc)
 	{
 		if (!is_flag(argv[i]))
-			p->num++;
+			n++;
 		i++;
 	}
-	if (p->num == 0)
+	if (n == 0)
 		return (1);
-	p->vlas = malloc(sizeof(int) * p->num);
+	p->vals = malloc(sizeof(int) * n);
 	if (!p->vals)
 		return (0);
-	i = 1;
-	while (i < argc - 1)
-	{
-		if (!set_flag(argv[i], &p->forced, &p->bench))
-		{
-			free(p->vals);
-			p->num = 0;
-			p->vals = NULL;
-			return (0);
-		}
-		if (!parse_int_strict(argv[i], &v))
-		{
-			free(p->vals);
-			p->vals = NULL;
-			p->num = 0;
-			return (0);
-		}
-		if (parse_int_strict(argv[i], &v))
-			p->vals[p->num++] = v;
-		if (has_dup(p->vals, p->num))
-		{
-			free(p->vals);
-			p->vals = NULL;
-			p->num = 0;
-			return (0);
-		}
-		return (1);
-	}
+    i = 1;
+    res = parse_helper(argc, argv, p, i);
+    if (!res)
+        return (0);
+	return (1);
 }

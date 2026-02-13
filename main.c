@@ -62,37 +62,41 @@ static void	run_forced(t_parse *p, t_node **a,
 		strategy_adaptive(a, b, bn);
 }
 
-static int handle_error(void)
+static int	setup_stacks_and_bench(t_node **a, t_node **b, t_bench *bn, t_parse *p)
 {
-		write(2, "Error\n", 6);
-		return (1);
+	*a = NULL;
+	*b = NULL;
+	build_list_from_vals(a, p->vals, p->num);
+	free(p->vals);
+	p->vals = NULL;
+	if (!*a)
+		return (0);
+	assign_ranks(*a, p->num);
+	bench_init(bn, p->bench);
+	bn->disorder = compute_disorder(*a);
+	return (1);
 }
 
 int	main(int argc, char **argv)
 {
-	t_node		*a;
-	t_node		*b;
-	t_bench		bn;
-	t_parse		p;
+	t_node	*a;
+	t_node	*b;
+	t_bench	bn;
+	t_parse	p;
 
 	if (argc <= 1)
 		return (0);
 	if (!parse_args(argc, argv, &p))
-        return (handle_error());
+		return (handle_error());
 	if (p.num == 0)
 		return (0);
-	a = NULL; b = NULL;
-	build_list_from_vals(&a, p.vals, p.num);
-	free(p.vals);
-	if (!a)
-         return (handle_error());
-	assign_ranks(a, p.num);
-	bench_init(&bn, p.bench);
-	bn.disorder = compute_disorder(a);
+	if (!setup_stacks_and_bench(&a, &b, &bn, &p))
+		return (handle_error());
 	if (!is_sorted(a))
 		run_forced(&p, &a, &b, &bn);
 	if (bn.enabled)
 		bench_print(&bn);
-	list_free(&a); list_free(&b);
+	list_free(a);
+	list_free(b);
 	return (0);
 }

@@ -12,35 +12,35 @@
 
 #include "push_swap.h"
 
-void	do_ss(t_node **a, t_node **b, bench *bn)
+void	do_ss(t_node **a, t_node **b, t_bench *bn)
 {
 	ss(a, b);
 	put_op("ss");
 	count_op(bn, OP_SS);
 }
 
-void	do_pa(t_node **a, bench *bn)
+void	do_pa(t_node **a, t_node **b, t_bench *bn)
 {
 	pa(a);
 	put_op("pa");
 	count_op(bn, OP_PA);
 }
 
-void	do_pb(t_node **b, bench *bn)
+void	do_pb(t_node **b, t_node **a, t_bench *bn)
 {
 	pb(b);
 	put_op("pb");
 	count_op(bn, OP_PB);
 }
 
-void	do_ra(t_node **a, bench *bn)
+void	do_ra(t_node **a, t_bench *bn)
 {
 	ra(a);
 	put_op("ra");
 	count_op(bn, OP_RA);
 }
 
-void	do_rb(t_node **b, bench *bn)
+void	do_rb(t_node **b, t_bench *bn)
 {
 	rb(b);
 	put_op("rb");

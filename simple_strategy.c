@@ -1,6 +1,6 @@
 #include"push_swap.h"
 
-void	simple(t_node **a,t_node **b, t_bench *bn)
+void	simple_strategy(t_node **a,t_node **b, t_bench *bn)
 {
 	while (*a)
 	{

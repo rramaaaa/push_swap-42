@@ -1,6 +1,6 @@
 #include"push_swap.h"
 
-void    print_ops(t_bench *bn)
+static void    print_ops(t_bench *bn)
 {
     putstr_fd("[bench] sa: ", 2);
 	putnbr_fd(bn->count[OP_SA], 2);
