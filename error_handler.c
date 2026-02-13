@@ -1,6 +1,6 @@
 #include"push_swap.h"
 
-void int handle_error(void)
+ int handle_error(void)
 {
 		write(2, "Error\n", 6);
 		return (1);

@@ -28,7 +28,7 @@ void	do_rra(t_node **a, t_bench *bn)
 
 void	do_rrb(t_node **a, t_bench *bn)
 {
-	rrb(bn);
+	rrb(b);
 	put_op("rrb");
 	count_op(bn, OP_RRB);
 }

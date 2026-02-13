@@ -4,6 +4,7 @@ void		bench_initial(t_bench *bn, int enabled)
 {
 	int	i;
 
+	i = 0;
 	bn->enabled = enabled;
 	bn->disorder = 0.0;
 	bn->strategy = ADAPTIVE;
@@ -19,7 +20,7 @@ void		bench_initial(t_bench *bn, int enabled)
 
 void	bench_set(t_bench *bn, t_strategy st, const char *sname, const char *compx)
 {
-	bn->startegy = st;
+	bn->strategy = st;
 	bn->strategy_name = sname;
 	bn->complexity = compx;
 }
@@ -36,6 +37,7 @@ void		putnbr_fd(long number, int fd)
 	long	n;
 	
 	n = number;
+	i = 0;
 	if(n == 0)
     {
 		write(fd, "0", 1);

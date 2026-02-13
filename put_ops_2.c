@@ -21,14 +21,14 @@ void	do_ss(t_node **a, t_node **b, t_bench *bn)
 
 void	do_pa(t_node **a, t_node **b, t_bench *bn)
 {
-	pa(a);
+	pa(a, b);
 	put_op("pa");
 	count_op(bn, OP_PA);
 }
 
 void	do_pb(t_node **b, t_node **a, t_bench *bn)
 {
-	pb(b);
+	pb(a, b);
 	put_op("pb");
 	count_op(bn, OP_PB);
 }

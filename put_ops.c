@@ -22,7 +22,7 @@ size_t	ft_strlen(char *op)
 	return (i);
 }
 
-void	putop(const char *op)
+void	put_op(const char *op)
 {
 	write(1, op, ft_strlen(op));
 	write(1, "\n", 1);
@@ -39,13 +39,13 @@ void	count_op(t_bench *bn, t_op op)
 void	do_sa(t_node **a, t_bench *bn)
 {
 	sa(a);
-	putop("sa");
+	put_op("sa");
 	count_op(bn, OP_SA);
 }
 
 void	do_sb(t_node **b, t_bench *bn)
 {
 	sb(b);
-	putop("sb");
+	put_op("sb");
 	count_op(bn, OP_SB);
 }

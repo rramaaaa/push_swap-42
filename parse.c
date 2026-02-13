@@ -8,32 +8,34 @@ static void initial_vals(t_parse *p)
 	p->forced = ADAPTIVE;
 }
 
-static parse_helper(int argc, char **argv, t_parse *p, int i)
+static int	parse_fail(t_parse *p)
+{
+	free(p->vals);
+	p->vals = NULL;
+	p->num = 0;
+	return (0);
+}
+
+static int	parse_helper(int argc, char **argv, t_parse *p, int i)
 {
     int v;
 
     v = 0;
     while (i < argc)
 	{
-		if (set_flag(argv[i], &p->forced, &p->bench));
-		else if (parse_int_strict(argv[i], &v))
-			p->vals[p->num++] = v;
-		else 
+		if (!set_flag(argv[i], &p->forced, &p->bench))
 		{
-			free(p->vals);
-			p->vals = NULL;
-			p->num = 0;
-			return (0);
+			if (parse_int_strict(argv[i], &v))
+				p->vals[p->num++] = v;
+			else
+			{
+				return (parse_fail(p));
+			}
 		}
-        i++;
+		i++;
 	}
 	if (has_dup(p->vals, p->num))
-	{
-		free(p->vals);
-		p->vals = NULL;
-		p->num = 0;
-		return (0);
-	}
+		return (parse_fail(p));
     return (1);
 }
 

@@ -137,7 +137,7 @@ void		bench_initial(t_bench *bn, int enabled);
 void	bench_set(t_bench *bn, t_strategy st, const char *sname, const char *compx);
 void putstr_fd(const char *s, int fd);
 void		putnbr_fd(long number, int fd);
-void	adaptive(t_node **a, t_node **b, t_bench *bn);
-void int handle_error(void);
+void	adaptive_strategy(t_node **a, t_node **b, t_bench *bn);
+int handle_error(void);
 int	main(int argc, char **argv);
 #endif

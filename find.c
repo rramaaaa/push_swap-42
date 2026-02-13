@@ -15,7 +15,7 @@ int pos_of_min_rank(t_node *a)
 	{
 		if (temp->rank < best)
         {
-            best = a->rank;
+            best = temp->rank;
             best_pos = pos;
         }
         pos++;

@@ -1,6 +1,6 @@
 #include"push_swap.h"
 
-void	adaptive(t_node **a, t_node **b, t_bench *bn)
+void	adaptive_strategy(t_node **a, t_node **b, t_bench *bn)
 {
 	double	dis;
 
@@ -12,7 +12,7 @@ void	adaptive(t_node **a, t_node **b, t_bench *bn)
             return ;
         if (breaks_count(*a) <= 1)
         {
-            meidum_strategy(a, b, bn);
+            medium_strategy(a, b, bn);
             return ;
         }
         bench_set(bn, ADAPTIVE, "Adaptive", "O(n√n)");
@@ -25,6 +25,6 @@ void	adaptive(t_node **a, t_node **b, t_bench *bn)
 		medium_strategy(a, b, bn);
 		return ;
 	}
-    bench_set(bn, ADAPYIVE, "Adaptive", "O(n log n)");
-	complex_strategy(a, b, n);
+    bench_set(bn, ADAPTIVE, "Adaptive", "O(n log n)");
+	complex_strategy(a, b, bn);
 }

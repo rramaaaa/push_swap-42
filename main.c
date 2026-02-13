@@ -4,10 +4,10 @@ static int build_list(t_node **head, t_node **tail,t_node *node)
 {
     if (!node)
 	{
-		list_free(&head);
+		list_free(head);
 		return (0);
 	}
-	if (!head)
+	if (!*head)
 	{
 		*head = node;
 		*tail = node;
@@ -46,20 +46,20 @@ static void	run_forced(t_parse *p, t_node **a,
 	if (p->forced == SIMPLE)
 	{
 		bench_set(bn, SIMPLE, "Simple", "O(n^2)");
-		strategy_simple(a, b, bn);
+		simple_strategy(a, b, bn);
 	}
 	else if (p->forced == MEDIUM)
 	{
 		bench_set(bn, MEDIUM, "Medium", "O(n√n)");
-		strategy_medium(a, b, bn);
+		medium_strategy(a, b, bn);
 	}
 	else if (p->forced == COMPLEX)
 	{
 		bench_set(bn, COMPLEX, "Complex", "O(n log n)");
-		strategy_complex(a, b, bn);
+		complex_strategy(a, b, bn);
 	}
 	else
-		strategy_adaptive(a, b, bn);
+		adaptive_strategy(a, b, bn);
 }
 
 static int	setup_stacks_and_bench(t_node **a, t_node **b, t_bench *bn, t_parse *p)
@@ -71,8 +71,8 @@ static int	setup_stacks_and_bench(t_node **a, t_node **b, t_bench *bn, t_parse *
 	p->vals = NULL;
 	if (!*a)
 		return (0);
-	assign_ranks(*a, p->num);
-	bench_init(bn, p->bench);
+	ranks(*a, p->num);
+	bench_initial(bn, p->bench);
 	bn->disorder = compute_disorder(*a);
 	return (1);
 }
@@ -96,7 +96,7 @@ int	main(int argc, char **argv)
 		run_forced(&p, &a, &b, &bn);
 	if (bn.enabled)
 		bench_print(&bn);
-	list_free(a);
-	list_free(b);
+	list_free(&a);
+	list_free(&b);
 	return (0);
 }

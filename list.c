@@ -58,7 +58,7 @@ int	is_sorted(t_node *a)
 	tmp = a;
 	if (!a || !a->next)
 		return (1);
-	while (tmp)
+	while (tmp->next)
 	{
 		if (tmp->value > tmp->next->value)
 			return (0);

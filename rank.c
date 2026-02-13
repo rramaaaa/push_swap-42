@@ -16,7 +16,7 @@ static int	binary_search(int *sorted,int size, int v)
         if (sorted[mid] < v)
             left = mid + 1;
         else
-            right = med - 1;
+            right = mid - 1;
 	}
 	return (-1);
 }
