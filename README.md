@@ -1,4 +1,4 @@
-*This activity has been created as part of the 42 curriculum by <sal-qur>,<rajarada>*
+*This activity has been created as part of the 42 curriculum by sal-qur, rajarada*
 
 #Push_Swap
 
@@ -23,3 +23,4 @@ And the ADAPTIVE STRATEGY that selects different internal methods depending on t
 
 
  
+
