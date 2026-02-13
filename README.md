@@ -20,14 +20,20 @@ The final code and design choices are my own work.
 
 ## Algorthim explanation
 SELECTION-SORT was used for the simple strategy O(n^2) ,
+
 that search repeadtely for the smallest elment and shift it to beginig of the list until it all being sorted.
+
 CHUNK-BASED-SORTING(divide into √n chunks) was used for medium strategy O(n√n).
+
 RADIX-SORT-ADAPTATION(LSD) was used for complex startegy O(nlogn) ,
+
 that sort based on element ranks.
+
 And the ADAPTIVE STRATEGY that selects different internal methods depending on the measured disorder.
 
 
  
+
 
 
 
