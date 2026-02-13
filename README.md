@@ -7,6 +7,7 @@ The purpose of the push_swap project is to sort a stack of integers using a limi
 ## Instructions
 ## Resources 
 https://en.wikipedia.org/wiki/Analysis_of_algorithms
+
 https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
 https://www.geeksforgeeks.org/c/enumeration-enum-c/
 YouTube videos
@@ -23,4 +24,5 @@ And the ADAPTIVE STRATEGY that selects different internal methods depending on t
 
 
  
+
 
